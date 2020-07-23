@@ -1,0 +1,49 @@
+<?php
+
+
+
+/**
+ * Реализация hook_block_info()
+ */
+function orphus_block_info() {
+  $blocks['orphus block'] = array( // имя блока - индекс массива
+    'info' => t('calc travel block'),
+	'translatable' => TRUE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Реализация hook_block_view()
+ */
+ 
+function orphus_block_view($delta = '') {
+  $block = array();
+$klang = $GLOBALS["language_url"] -> language;
+  /*
+  switch ($delta) {
+    case 'orphus block':
+      $block['subject'] = t('orphus block');
+	switch ($klang){
+		
+		case 'en':
+		$block['content'] = 'EN EN EN';
+		break;
+//////////////////////////////////////////////////////////////////		
+		case 'ru':
+		include "translate/$klang/$klang.inc.php";
+		break;
+////////////////////////////////////////////////////		
+		default:
+		include "translate/$klang/$klang.inc.php";
+			break;
+	}
+					
+
+
+     break;
+  }*/
+  include "translate/$klang/$klang.inc.php";
+  return $block;
+}

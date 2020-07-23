@@ -1,0 +1,15 @@
+name = Travel block
+description = PolisOnLine Module 
+version = 1.0
+core = 7.x
+
+scripts[] = js/moment.js
+scripts[] = js/jquery.daterangepicker.js
+scripts[] = js/fileinput.min.js
+scripts[] = js/main.js
+
+scripts[] = js/jquery.scrollTo.min.js
+stylesheets[all][] = css/daterangepicker.min.css
+stylesheets[all][] = css/fileinput.min.css
+stylesheets[all][] = css/travel.css
+

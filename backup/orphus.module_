@@ -1,0 +1,1144 @@
+<?php
+/**
+ * Реализация hook_block_info()
+ */
+function orphus_block_info() {
+  $blocks['orphus block'] = array( // имя блока - индекс массива
+    'info' => t('calc travel block'),
+  );
+
+  return $blocks;
+}
+
+/**
+ * Реализация hook_block_view()
+ */
+function orphus_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'orphus block':
+      $block['subject'] = t('orphus block');
+      $block['content'] = '
+
+<style>
+.column{
+	display: inline-block;
+}
+</style>
+<div class="container">
+	<div id="insuranceCalculator">
+	<div id="demo"></div>
+		<div class="input">
+		<form action="/sites/all/modules/travel/mail.php" method="post">
+			<label for="Kter">Територія дії</label>
+			<select id="Kter" name="Kter" required>
+				<option value="1">
+					ЄВРОПА окрім України та країни постійного проживання.
+				</option>
+				<option value="1.5">
+					ВЕСЬ СВІТ за виключенням країн: Північної та Південної Америки, Африки, Азії, Австралії та Океанії та крім України та країни постійного проживання.
+				</option>
+				<option value="2.3">
+					ВЕСЬ СВІТ* включаючи країни: Північної та Південної Америки, Африки, Азії, Австралії та Океанії, але окрім України та країни постійного проживання.
+				</option>
+			</select>
+
+			<br><br>
+			<label for="tourists">
+				Кількість застрахованих осіб
+			</label>
+
+			<input id="tourists" name="tourists" type="number" value="1" min="1" max="4" step="1" required>
+			<br><br>
+			
+			<div>
+				<div class="column">
+				Вік Застрахованої особи<br>
+					<select id="K4" name="K4">
+						<option value="1" selected>Виберіть вік застрахованої 	особи</option>
+						<option value="1.5">від 1 року до 3 років</option>
+						<option value="1" selected>від 6 років до 60 років</option>
+						<option value="1.5">від 60 до 65 років</option>
+						<option value="2">від 66 до 75 років</option>
+					</select>
+				</div>
+				<div class="column" id="K4_2_div" style="display:none">
+				Вік 2-ї застрахованої особи<br>
+					<select id="K4_2" name="K4_2" >
+						<option value="1" >Виберіть вік застрахованої 	особи</option>
+						<option value="1" selected>від 6 років до 60 років</option>
+						<option value="1.5">від 1 року до 3 років</option>
+						<option value="1.5">від 60 до 65 років</option>
+						<option value="2">від 66 до 75 років</option>
+					</select>
+				</div>
+				<br/>
+
+				<div class="column" id="K4_3_div" style="display:none">
+				Вік 3-ї застрахованої особи<br>
+					<select id="K4_3" name="K4_3">
+						<option value="1" >Виберіть вік застрахованої 	особи</option>
+						<option value="1.5">від 1 року до 3 років</option>
+						<option value="1" selected>від 6 років до 60 років</option>
+						<option value="1.5">від 60 до 65 років</option>
+						<option value="2">від 66 до 75 років</option>
+					</select>
+				</div>
+
+				<div class="column" id="K4_4_div" style="display:none">
+				Вік 4-ї застрахованої особи<br>
+					<select id="K4_4" name="K4_4">
+						<option value="1" selected>Виберіть вік застрахованої 	особи</option>
+						<option value="1.5">від 1 року до 3 років</option>
+						<option value="1" >від 6 років до 60 років</option>
+						<option value="1.5 selected">від 60 до 65 років</option>
+						<option value="2">від 66 до 75 років</option>
+					</select>
+				</div>
+			</div>			
+			<br><br>
+			<label for="dateStart">Початок дії договору</label>	
+			<input type="date" id="dateStart" name="dateStart" required>
+			
+			<label for="dateStop">Дата кінця дії договору</label>	
+			<input type="date" id="dateStop" name="dateStop" required>
+			<br><br>
+			<label for="Kpr">
+				Програма страхування
+			</label>
+			<select id="Kpr" name="Kpr" required>
+				<option value="1">А (Standart)</option>
+				<option value="1.38">В (Business)</option>
+				<option value="1.9">С (Comfort)</option>
+				<option value="3">E (Elite)</option>
+			</select>
+			<br><br>
+			<label for="insSum">
+				Розмір страхової суми
+			</label>
+			<select id="insSum" name="insSum" required>
+				<option value="10000" id="multi">10 000</option>
+				<option value="15000">15 000</option>
+				<option value="30000" selected>30 000</option>
+			</select>
+			<label for="insCur">
+				Валюта страхової суми
+			</label>
+			<select id="insCur" name="insCur" required>
+				<option value="USD" selected>USD</option>
+				<option value="EUR">EUR</option>	
+			</select>
+			<br><br>
+			<label for="Kfr">
+				Розмір безумовної франшизи
+			</label>
+			<select id="Kfr" name="Kfr" required>
+				<option value="1">0</option>
+				<option value="0.95">50</option>
+				<option value="0.85">100</option>
+				<option value="0.8">150</option>
+				<option value="0.75">200</option>
+				<option value="0.7">250</option>
+			</select><span id="currency"></span>
+			<br>
+		
+			<input type="checkbox" id="multi_visa" name="multi_visa">
+			<label for="multi_visa">Мультивіза</label>
+			<!--Появляется после галочки id="multi_visa"-->
+			<div id="multi_visa_period_hidden" style="display:none">
+			<label for="multi_visa_period">
+				Термін дії Договору/строк дії Договору
+			</label>
+			<select id="multi_visa_period" name="multi_visa_period" required>
+					<option value="1">15/30</option>
+					<option value="2">15/90</option>
+					<option value="3">30/90</option>
+					<option value="4">60/180</option>
+					<option value="5">90/180</option>
+					<option value="6">30/365</option>
+					<option value="7">60/365</option>
+					<option value="8">90/365</option>
+					<option value="9">180/365</option>
+			</select>
+			</div>
+			<br>
+			<fieldset style="display: inline;">		
+				<input type="checkbox" id="K1" name="K1">
+				<label for="K1">
+					Виконання небезпечної роботи
+				</label>
+				<!--Появляется после галочки id="K1"-->
+				<div id="K1_hidden" hidden>
+					<label for="activity">
+						Групи ризику в залежності від виду діяльності
+					</label>
+					<select id="K1_activity" name="K1_activity" required>
+						<option disabled selected>Виберіть елемент із списку</option>
+						<option value="2.5">Особи, праця яких пов’язана з особливим (підвищеним) ризиком</option>
+						<option value="1.5">Категорії працюючих безпосередньо зайнятi в процесі виробництва</option>
+						<option value="1">Категорії громадян, що безпосередньо не зайнятi у процесі виробництва</option>
+					</select>
+				</div>
+				<br>
+				<input type="checkbox" id="K2" name="K2">
+				<label for="K2">
+					Зайняття масовим непрофесійним спортом або звичайне зайняття активним відпочинком
+				</label>
+				<!--Появляется после галочки id="K2"-->
+				<div id="K2_hidden" hidden>
+					<label for="K2_activity">
+						Групи ризику в залежності від виду спорту
+					</label>
+					<select id="K2_activity" name="K2_activity" required>
+						<option disabled selected>Виберіть елемент із списку</option>
+						<option value="1">Подорожі (походи піші) - із спокійним ландшафтом, шахи, шашки, більярд, спортивний бридж, радіоспорт, а також види спорту з аналогічними фізичними навантаженнями, тощо</option>
+						<option value="1.1">Аеробіка, бадмінтон, біатлон, буєрний спорт, вітрильний спорт, волейбол, гімнастика художня, лижні гонки, орієнтувальний спорт, плавання, перетягування канату, тренування в тренажерних залах, фітнес, шейпінг, спортивні танці; спортивна аеробіка; акробатичний рок-н-рол настільний теніс, тощо</option>
+						<option value="1.3">Акробатика, армспорт, бейсбол, єдиноборства, велоспорт, веслування, вінсерфінг, водне поло, водні лижі, гандбол, гирьовий спорт, лижне двоборство, легка атлетика, пауерліфтінт, планерний спорт, пейнтбол, пожежно-прикладний спорт, стрибки на батуті, стрибки у воду, стрільба, триатлон, теніс (крім настільного), фехтування, фігурне катання, футбол, подорожі (походи піші) – із гірським ландшафтом, тощо</option>
+						<option value="2">Автомобільний спорт, альпінізм, багатоборство, баскетбол, бобслей, бокс, дайвінг, важка атлетика, гімнастика спортивна, гірськолижний спорт, дельтапланеризм, кінний спорт, картинт, карате, ковзанярський спорт, літаковий спорт, мотобол, мотоциклетний спорт, парашутний спорт, підводний спорт, планерний спорт, поло, ралі, регбі, санний спорт, скелелазіння, стрибки на лижах із трампліну, сноуборд, спідвей, хокей, фрістайл, тощо</option>
+						<option value="1.15">Активний відпочинок</option>
+					</select>
+				</div>
+				<br>
+				<input type="checkbox" id="K3" name="K3">
+				<label for="K3">
+					Зайняття професійним спортом, а також масовим спортом на період проведення змагань
+				</label>
+				<!--Появляется после галочки id="K3"-->
+				<div id="K3_hidden" hidden>
+					<label for="K3_activity">
+						Групи ризику в залежності від виду спорту
+					</label>
+					<select id="K3_activity" name="K3_activity" required>
+						<option disabled selected>Виберіть елемент із списку</option>
+						<option value="1">Подорожі (походи піші) - із спокійним ландшафтом, шахи, шашки, більярд, спортивний бридж, радіоспорт, а також види спорту з аналогічними фізичними навантаженнями, тощо</option>
+						<option value="2">Аеробіка, бадмінтон, біатлон, буєрний спорт, вітрильний спорт, волейбол, гімнастика художня, лижні гонки, орієнтувальний спорт, плавання, перетягування канату, тренування в тренажерних залах, фітнес, шейпінг, спортивні танці; спортивна аеробіка; акробатичний рок-н-рол настільний теніс, тощо</option>
+						<option value="3">Акробатика, армспорт, бейсбол, єдиноборства, велоспорт, веслування, вінсерфінг, водне поло, водні лижі, гандбол, гирьовий спорт, лижне двоборство, легка атлетика, пауерліфтінт, планерний спорт, пейнтбол, пожежно-прикладний спорт, стрибки на батуті, стрибки у воду, стрільба, триатлон, теніс (крім настільного), фехтування, фігурне катання, футбол, подорожі (походи піші) – із гірським ландшафтом, тощо</option>
+						<option value="3">Автомобільний спорт, альпінізм, багатоборство, баскетбол, бобслей, бокс, дайвінг, важка атлетика, гімнастика спортивна, гірськолижний спорт, дельтапланеризм, кінний спорт, картинт, карате, ковзанярський спорт, літаковий спорт, мотобол, мотоциклетний спорт, парашутний спорт, підводний спорт, планерний спорт, поло, ралі, регбі, санний спорт, скелелазіння, стрибки на лижах із трампліну, сноуборд, спідвей, хокей, фрістайл, тощо</option>
+					</select>
+				</div><br>
+				<input type="checkbox" id="accident" name="accident">
+				<label for="accident">
+					Добровільне страхування від нещасних випадків
+				</label>
+				<!--Появляется после галочки id="accident"-->
+				<div id="accident_hidden" hidden>
+					<label for="SSnv">
+						Добровільне страхування від нещасних випадків
+					</label>
+					<select id="SSnv" name="SSnv" required>
+						<option disabled selected value="0">Виберіть елемент із списку</option>
+						<option value="5000" id="default">5 000</option>
+						<option value="10000">10 000</option>
+						<option value="20000">20 000</option>
+					</select><span> Грн.</span>
+				</div>
+			</fieldset><br><br>
+<div style="display:none">
+			<input type="text" id="SPb" name="SPb" hidden>
+			<input type="text" id="SPb_accident" name="SPb_accident" hidden>
+			<input type="text" id="SPtr" name="SPtr" hidden>
+			<input type="text" id="SP" name="SP" hidden>
+			<input type="text" id="SPzag" name="SPzag" hidden>
+</div>
+
+			<span>Загальна сума:</span>
+			<!--Выводит общую сумму полиса-->
+			<div id="sum">0,00 Грн.</div>
+			<span>Грн.</span><br>
+			<button id="continue">Продовжити</button><br><br>
+			<!--Появляется после нажатия кнопки id="continue"-->
+			<div class="container" id="personal_data_hidden" hidden>
+				<div id="personal_data">
+					<div class ="input">
+						<form action="">
+							<div id="person1" class="column">
+								<label for="email1">Email<span>*</span></label>
+								<input type="email" id="email1" name="email1" placeholder="Введіть ваш email" required><br>
+								<label for="tel1">Тел.<span>*</span></label>
+								<input type="text" name="tel1" id="tel1" placeholder="(___)___-____" required><br>
+								<label for="name1">Ім"я<span>*</span></label>
+								<input type="text" id="name1" name="name1" placeholder="Введіть ім"я на англійській мові" required><span id="name1_error"></span><br>
+								<label for="surname1">Прізвище<span>*</span></label>
+								<input type="text" id="surname1" name="surname1" placeholder="Введіть прізвище на англійській мові" required><span id="surname1_error"></span><br>
+								<label for="date1">Дата народження</label>	
+								<input type="date" id="date1" name="date1" required><br>
+								<label for="pass_series1">Серія паспорта<span>*</span></label>
+								<input type="text" id="pass_series1" name="pass_series1" placeholder="Введіть серію паспорта" required><span id="pass_series1_error"></span><br>
+								<label for="pass_num1">Номер паспорта<span>*</span></label>
+								<input type="text" id="pass_num1" name="pass_num1" placeholder="Введіть номер паспорта" required><span id="pass_num1_error"></span><br><br>
+							</div>
+							<div id="person2" class="column" style="display:none">
+								<label for="email2">Email <span>*</span></label>
+								<input type="email" id="email2" class="required2" name="email2" placeholder="Введіть ваш email"><br>
+								<label for="tel2">Тел.<span>*</span></label>
+								<input type="text" name="tel2" id="tel2" class="required2" placeholder="(___)___-____"><br>
+								<label for="name2">Ім"я<span>*</span></label>
+								<input type="text" id="name2" class="required2" name="name2" placeholder="Введіть ім"я на англійській мові"><span id="name2_error"></span><br>
+								<label for="surname2">Прізвище<span>*</span></label>
+								<input type="text" id="surname2" class="required2" name="surname2" placeholder="Введіть прізвище на англійській мові"><span id="surname2_error"></span><br>
+								<label for="date">Дата народження</label>	
+								<input type="date" id="date2" class="required2" name="date2"><br>
+								<label for="pass_series2">Серія паспорта<span>*</span></label>
+								<input type="text" id="pass_series2" class="required2" name="pass_series2" placeholder="Введіть серію паспорта"><span id="pass_series2_error"></span><br>
+								<label for="pass_num2">Номер паспорта<span>*</span></label>
+								<input type="text" id="pass_num2" class="required2" name="pass_num2" placeholder="Введіть номер паспорта"><span id="pass_num2_error"></span><br><br>
+							</div>
+							<div id="person3" class="column" style="display:none">
+								<label for="email3">Email <span>*</span></label>
+								<input type="email" id="email3" class="required3" name="email3" placeholder="Введіть ваш email"><br>
+								<label for="tel3">Тел.<span>*</span></label>
+								<input type="text" name="tel3" id="tel3" class="required3" placeholder="(___)___-____"><br>
+								<label for="name3">Ім"я<span>*</span></label>
+								<input type="text" id="name3" class="required3" name="name3" placeholder="Введіть ім"я на англійській мові"><span id="name3_error"></span><br>
+								<label for="surname3">Прізвище<span>*</span></label>
+								<input type="text" id="surname3" class="required3" name="surname3" placeholder="Введіть прізвище на англійській мові"><span id="surname3_error"></span><br>
+								<label for="date3">Дата народження</label>	
+								<input type="date" id="date3" class="required3" name="date3"><br>
+								<label for="pass_series3">Серія паспорта<span>*</span></label>
+								<input type="text" id="pass_series3" class="required3" name="pass_series3" placeholder="Введіть серію паспорта"><span id="pass_series3_error"></span><br>
+								<label for="pass_num3">Номер паспорта<span>*</span>	</label>
+								<input type="text" id="pass_num3" class="required3" name="pass_num3" placeholder="Введіть номер паспорта"><span id="pass_num3_error"></span><br><br>
+							</div>
+							<div id="person4" class="column" style="display:none">
+								<label for="email4">Email <span>*</span></label>
+								<input type="email" id="email4" class="required4" name="email4" placeholder="Введіть ваш email"><br>
+								<label for="tel4">Тел.<span>*</span></label>
+								<input type="text" name="tel4" id="tel4" class="required4" placeholder="(___)___-____"><br>
+								<label for="name4">Ім"я<span>*</span></label>
+								<input type="text" id="name4" class="required4" name="name4" placeholder="Введіть ім"я на англійській мові"><span id="name4_error"></span><br>
+								<label for="surname4">Прізвище<span>*</span></label>
+								<input type="text" id="surname4" class="required4" name="surname4" placeholder="Введіть прізвище на англійській мові"><span id="surname4_error"></span><br>
+								<label for="date4">Дата народження</label>	
+								<input type="date" id="date4" class="required4" name="date4"><br>
+								<label for="pass_series4">Серія паспорта<span>*</span></label>
+								<input type="text" id="pass_series4" class="required4" name="pass_series4" placeholder="Введіть серію паспорта"><span id="pass_series4_error"></span><br>
+								<label for="pass_num4">Номер паспорта<span>*</span></label>
+								<input type="text" id="pass_num4" class="required4" name="pass_num4" placeholder="Введіть номер паспорта"><span id="pass_num4_error"></span><br><br>
+							</div>
+							<input  type="submit" id="submit" value="Submit"/>
+						</form>							
+					</div>
+				</div>
+			</div>
+		</form>	
+		</div>
+	</div>
+</div>
+
+
+
+<!-- ///////////////////////////////////////////////////////////////////// JS ////////////////////////////////////////////////////// -->
+
+
+
+<script>
+
+
+document.body.onload = function (){
+var arreurusd;
+  var xhttp = new XMLHttpRequest();
+  	xhttp.open("POST", "/sites/all/modules/travel/get_rate.php", false);
+  	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  	
+  	xhttp.onreadystatechange = function() {
+    	if (this.readyState == 4 && this.status == 200) {
+//    	 rate_arr = JSON.parse(this.responseText);
+      	 rate_string = this.responseText;
+	      arreurusd  =  rate_string.split(";");
+		return arreurusd;
+
+    	}
+	else console.log("Missed get_rate.php");
+  		};	
+  
+	xhttp.send("qwe=" + currency);
+
+
+console.log("eur[0] " + arreurusd[0]);
+console.log("usd[1] " + arreurusd[1]);
+var eur = arreurusd[0];
+var usd = arreurusd[1];
+
+//var currency = document.getElementById("insCur").value;
+var currency = "USD";
+document.getElementById("currency").innerHTML = " " + currency;
+var insSum = document.getElementById("insSum").value;
+var insSum_selected = document.getElementById("insSum").value;
+var Kpr = document.getElementById("Kpr").value;
+var Kfr = document.getElementById("Kfr").value;
+var Kter = document.getElementById("Kter").value;
+var dateStart = "";
+var dateStop = "";
+var SPb = "";
+var multi_visa_period = 1;
+var SP = "";
+var SPb_accident = "";
+var days;
+var qwe;
+var K1 = 1;
+var K2 = 1;
+var K3 = 1;
+var K4 = 1;
+var K4_2 = 1;
+var K4_3 = 1;
+var K4_4 = 1;
+var K5 = 1;
+var tourists = 1;
+var rate = 1;
+var rate_arr;
+var SSnv = 0;
+var SPtr = 0;
+var SPtr1 = 0;
+var SPtr2 = 0;
+var SPtr3 = 0;
+var SPtr4 = 0;
+var SPnv = 0;
+var SPnv1 = 0;
+var SPnv2 = 0;
+var SPnv3 = 0;
+var SPnv4 = 0;
+var SPzag = 0;
+var flag = 0;
+var flag_acc = 0;
+var regName = new RegExp("^[A-z]+$");
+var regpass_series = new RegExp("^[A-Z]{2}$");
+var regpass_num = new RegExp("^[0-9]{6}$");
+var insurancePaymentForOneDay_oneTrip = [
+											[0.24, 0.22, 0.2, 0.18, 0.16, 0.14], 
+											[0.26, 0.24, 0.21, 0.19, 0.17, 0.15], 
+											[0.35, 0.32, 0.29, 0.25, 0.22, 0.19]
+										];
+var insurancePaymentForOneDay_muliTrip = [
+											[4, 4, 8, 15, 19, 10, 17, 20, 30], 
+											[5, 5, 10, 17, 23, 12, 20, 25, 40], 
+										];
+var insurancePaymentForOneDay_oneTrip_acc = [0.045, 0.07, 0.127, 0.303, 0.61, 0.956];
+var insurancePaymentForOneDay_muliTrip_acc = [0.1, 0.13, 0.215, 0.456, 0.530, 0.368, 0.629, 0.783, 1.278];
+var K5_factor = [1, 0.95, 0.9, 0.85, 0.8];
+//Коригуючі коефіцієнти в залежності від кількості Застрахованих осіб
+document.getElementById("tourists").onclick = function() {
+	tourists = document.getElementById("tourists").value;
+	K4_2_div = document.getElementById("K4_2_div");
+	K4_3_div = document.getElementById("K4_3_div");
+	K4_4_div = document.getElementById("K4_4_div");
+	person2 = document.getElementById("person2");
+	person3 = document.getElementById("person3");
+	person4 = document.getElementById("person4");
+	var required2 = document.getElementsByClassName("required2");
+	var required3 = document.getElementsByClassName("required3");
+	var required4 = document.getElementsByClassName("required4");
+
+	if (tourists == 1) {
+		K4_2_div.style.display = "none";
+		K4_3_div.style.display = "none";
+		K4_4_div.style.display = "none";
+		
+		person2.style.display = "none";
+		person3.style.display = "none";
+		person4.style.display = "none";
+	}
+	if (tourists == 2) {
+		K4_2_div.style.display = "inline-block";
+		K4_3_div.style.display = "none";
+		K4_4_div.style.display = "none";
+		
+		person2.style.display = "inline-block";
+		person3.style.display = "none";
+		person4.style.display = "none";
+		for (var i = 0; i < required2.length; i++) {
+			required2[i].required = true;
+		}
+	}
+	if (tourists == 3) {
+		K4_2_div.style.display = "inline-block";
+		K4_3_div.style.display = "inline-block";
+		K4_4_div.style.display = "none";
+
+		person2.style.display = "inline-block";
+		person3.style.display = "inline-block";
+		person4.style.display = "none";
+		for (var i = 0; i < required2.length; i++) {
+			required2[i].required = true;
+			required3[i].required = true;
+		}
+	}	
+	if (tourists == 4) {
+		K4_2_div.style.display = "inline-block";
+		K4_3_div.style.display = "inline-block";
+		K4_4_div.style.display = "inline-block";
+
+		person2.style.display = "inline-block";
+		person3.style.display = "inline-block";
+		person4.style.display = "inline-block";
+
+		for (var i = 0; i < required2.length; i++) {
+			required2[i].required = true;
+			required3[i].required = true;
+			required4[i].required = true;
+		}
+	}
+
+	if (tourists < 3) {
+		K5 = K5_factor[0];
+	}
+	if (tourists > 2 && tourists < 11) {
+		K5 = K5_factor[1];
+	}
+	if (tourists > 10 && tourists < 21) {
+		K5 = K5_factor[2];
+	}
+	if (tourists > 20 && tourists < 51) {
+		K5 = K5_factor[3];
+	}
+	if (tourists > 50) {
+		K5 = K5_factor[4];
+	}
+	countSPzag();
+}
+//Получение курса валюты на текущую дату
+
+
+
+
+//Валюта Страхової суми
+document.getElementById("insCur").onchange = function() {
+	currency = document.getElementById("insCur").value;
+	document.getElementById("currency").innerHTML = " " + currency;
+	countSPzag();
+}
+
+//Коригуючі коефіцієнти в залежності 
+//від віку Застрахованих осіб:(K4)
+document.getElementById("K4").onchange = function() {
+	K4 = document.getElementById("K4").value;
+	countSPzag();
+}
+document.getElementById("K4_2").onchange = function() {
+	K4_2 = document.getElementById("K4_2").value;
+	countSPzag();
+}
+document.getElementById("K4_3").onchange = function() {
+	K4_3 = document.getElementById("K4_3").value;
+	countSPzag();
+}
+document.getElementById("K4_4").onchange = function() {
+	K4_4 = document.getElementById("K4_4").value;
+	countSPzag();
+}
+//Страхова сума
+document.getElementById("insSum").onchange = function() {
+	insSum = document.getElementById("insSum").value;
+	countSPzag();
+}
+//Коефіцієнти програми страхування (Кпр)
+document.getElementById("Kpr").onchange = function() {
+	Kpr = document.getElementById("Kpr").value;
+	countSPzag();
+}
+//Коефіцієнти безумовної франшизи (Кфр)
+document.getElementById("Kfr").onchange = function() {
+	Kfr = document.getElementById("Kfr").value;
+	countSPzag();
+}
+//Коефіцієнти території дії Договору страхування (Ктер)
+document.getElementById("Kter").onchange = function() {
+	Kter = document.getElementById("Kter").value;
+
+
+	countSPzag();
+}
+//Дата початку договору
+document.getElementById("dateStart").onchange = function() {
+	dateStart = document.getElementById("dateStart").value;
+	countSPzag();
+}
+//Дата кінця договору та кількість днів
+document.getElementById("dateStop").onchange = function() {
+	dateStop = document.getElementById("dateStop").value;
+	var diff = new Date(dateStop) - new Date(dateStart);
+	days = diff/1000/60/60/24 + 1;
+	countSPzag();
+}
+
+//Базові страхові платежі з комплексного страхування під час перебуванням за
+//кордоном (СПб)
+function countSPb() {
+	if (insSum == 30000) {
+		if (flag == 1) {
+			if (multi_visa_period == 1) {
+				SPb = insurancePaymentForOneDay_muliTrip[1][0];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (multi_visa_period == 2) {
+				SPb = insurancePaymentForOneDay_muliTrip[1][1];
+				document.getElementById("SPb").value = SPb;		
+			}	
+			if (multi_visa_period == 3) {
+				SPb = insurancePaymentForOneDay_muliTrip[1][2];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (multi_visa_period == 4) {
+				SPb = insurancePaymentForOneDay_muliTrip[1][3];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 5) {
+				SPb = insurancePaymentForOneDay_muliTrip[1][4];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 6) {
+				SPb = insurancePaymentForOneDay_muliTrip[1][5];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 7) {
+				SPb = insurancePaymentForOneDay_muliTrip[1][6];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 8) {
+				SPb = insurancePaymentForOneDay_muliTrip[1][7];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 9) {
+				SPb = insurancePaymentForOneDay_muliTrip[1][8];	
+				document.getElementById("SPb").value = SPb;	
+			}		
+		}else{
+			if (days < 8) {
+				SPb = insurancePaymentForOneDay_oneTrip[2][0];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 8 && days < 16) {
+				SPb = insurancePaymentForOneDay_oneTrip[2][1];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 15 && days < 31) {
+				SPb = insurancePaymentForOneDay_oneTrip[2][2];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 30 && days < 91) {
+				SPb = insurancePaymentForOneDay_oneTrip[2][3];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 90 && days < 181) {
+				SPb = insurancePaymentForOneDay_oneTrip[2][4];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 180 && days < 367) {
+				SPb = insurancePaymentForOneDay_oneTrip[2][5];
+				document.getElementById("SPb").value = SPb;	
+			}		
+		}
+	}else if (insSum == 15000) {
+		if (flag == 1) {
+			if (multi_visa_period == 1) {
+				SPb = insurancePaymentForOneDay_muliTrip[0][0];
+				document.getElementById("SPb").value = SPb;		
+			}
+			if (multi_visa_period == 2) {
+				SPb = insurancePaymentForOneDay_muliTrip[0][1];
+				document.getElementById("SPb").value = SPb;		
+			}	
+			if (multi_visa_period == 3) {
+				SPb = insurancePaymentForOneDay_muliTrip[0][2];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (multi_visa_period == 4) {
+				SPb = insurancePaymentForOneDay_muliTrip[0][3];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 5) {
+				SPb = insurancePaymentForOneDay_muliTrip[0][4];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 6) {
+				SPb = insurancePaymentForOneDay_muliTrip[0][5];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 7) {
+				SPb = insurancePaymentForOneDay_muliTrip[0][6];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 8) {
+				SPb = insurancePaymentForOneDay_muliTrip[0][7];
+				document.getElementById("SPb").value = SPb;	
+			}	
+			if (multi_visa_period == 9) {
+				SPb = insurancePaymentForOneDay_muliTrip[0][8];
+				document.getElementById("SPb").value = SPb;		
+			}		
+		}else {
+			if (days < 8) {
+				SPb = insurancePaymentForOneDay_oneTrip[1][0];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 8 && days < 16) {
+				SPb = insurancePaymentForOneDay_oneTrip[1][1];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 15 && days < 31) {
+				SPb = insurancePaymentForOneDay_oneTrip[1][2];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 30 && days < 91) {
+				SPb = insurancePaymentForOneDay_oneTrip[1][3];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 90 && days < 181) {
+				SPb = insurancePaymentForOneDay_oneTrip[1][4];
+				document.getElementById("SPb").value = SPb;	
+			}
+			if (days > 180 && days < 367) {
+				SPb = insurancePaymentForOneDay_oneTrip[1][5];
+				document.getElementById("SPb").value = SPb;	
+			}
+		}	
+	} else {
+		if (days < 8) {
+			SPb = insurancePaymentForOneDay_oneTrip[0][0];
+			document.getElementById("SPb").value = SPb;	
+		}
+		if (days > 8 && days < 16) {
+			SPb = insurancePaymentForOneDay_oneTrip[0][1];
+			document.getElementById("SPb").value = SPb;	
+		}
+		if (days > 15 && days < 31) {
+			SPb = insurancePaymentForOneDay_oneTrip[0][2];
+			document.getElementById("SPb").value = SPb;	
+		}
+		if (days > 30 && days < 91) {
+			SPb = insurancePaymentForOneDay_oneTrip[0][3];
+			document.getElementById("SPb").value = SPb;	
+		}
+		if (days > 90 && days < 181) {
+			SPb = insurancePaymentForOneDay_oneTrip[0][4];
+			document.getElementById("SPb").value = SPb;	
+		}
+		if (days > 180 && days < 367) {
+			SPb = insurancePaymentForOneDay_oneTrip[0][5];
+			document.getElementById("SPb").value = SPb;	
+		}
+	}
+}
+//Базові страхові платежі з добровільного страхування від нещасних випадків(СПб)
+function countSPb_accident() {	
+	if (flag_acc == 0) {	
+		if (days < 8) {
+			SPb_accident = insurancePaymentForOneDay_oneTrip_acc[0];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (days > 8 && days < 16) {
+			SPb_accident = insurancePaymentForOneDay_oneTrip_acc[1];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (days > 15 && days < 31) {
+			SPb_accident = insurancePaymentForOneDay_oneTrip_acc[2];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (days > 30 && days < 91) {
+			SPb_accident = insurancePaymentForOneDay_oneTrip_acc[3];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (days > 90 && days < 181) {
+			SPb_accident = insurancePaymentForOneDay_oneTrip_acc[4];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (days > 180 && days < 367) {
+			SPb_accident = insurancePaymentForOneDay_oneTrip_acc[5];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}	
+	} else {
+		if (multi_visa_period == 1) {
+			SPb_accident = insurancePaymentForOneDay_muliTrip_acc[0];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (multi_visa_period == 2) {
+			SPb_accident = insurancePaymentForOneDay_muliTrip_acc[1];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (multi_visa_period == 3) {
+			SPb_accident = insurancePaymentForOneDay_muliTrip_acc[2];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (multi_visa_period == 4) {
+			SPb_accident = insurancePaymentForOneDay_muliTrip_acc[3];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (multi_visa_period == 5) {
+			SPb_accident = insurancePaymentForOneDay_muliTrip_acc[4];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (multi_visa_period == 6) {
+			SPb_accident = insurancePaymentForOneDay_muliTrip_acc[5];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (multi_visa_period == 7) {
+			SPb_accident = insurancePaymentForOneDay_muliTrip_acc[6];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (multi_visa_period == 8) {
+			SPb_accident = insurancePaymentForOneDay_muliTrip_acc[7];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+		if (multi_visa_period == 9) {
+			SPb_accident = insurancePaymentForOneDay_muliTrip_acc[8];
+			document.getElementById("SPb_accident").value = SPb_accident;
+		}
+	}	
+}
+//Мультивіза
+/*Если поставить галку "Мультивіза":
+1 - появляется select с выбором "Термін дії Договору/строк дії Договору";
+2 - пропадает значение 10000 в select "Розмір страхової суми"(id="multi");
+3 - устанавливается flag = 1, для пересчета коефициентов для мультивизы;
+4 - Если убрать галку "Мультивіза", пропадает select с выбором "Термін дії Договору/строк дії Договору",
+	устанавливается flag = 0, для пересчета коефициентов для одноразовой визы,
+	появляется значение 10000 в select "Розмір страхової суми"(id="multi")
+*/
+document.getElementById("multi_visa").onclick = function() {
+	if(this.checked){  		
+		//1
+   		document.getElementById("multi_visa_period_hidden").style.display = "block";
+        //2
+        document.getElementById("multi").disabled = true;
+        if (document.getElementById("insSum").value == 10000) {
+        	document.getElementById("insSum").value = insSum_selected;
+        	insSum = insSum_selected;
+        } 
+        //3       	
+        flag = 1;
+          countSPzag();
+          document.getElementById("multi_visa_period").onchange = function() {
+          	multi_visa_period = document.getElementById("multi_visa_period").value;
+			countSPzag();
+          }
+     //4
+	}else{
+        document.getElementById("multi_visa_period_hidden").style.display = "none";
+        document.getElementById("multi").disabled = false;
+		insSum = document.getElementById("insSum").value;
+        flag = 0;
+        countSPzag();
+    }	
+}
+//Виконання небезпечної роботи
+/*Если поставить галку "Виконання небезпечної роботи",
+появляется select с выбором "Групи ризику в залежності від виду діяльності"
+и идет пересчет согласно выбранному пункту,
+а если убрать галку все значения возвращаются на значения по умолчанию 
+и идет соответсвующий перерасчет
+*/
+document.getElementById("K1").onclick = function() {
+	 if(this.checked){  		
+   		document.getElementById("K1_hidden").style.display = "block";
+   		document.getElementById("K1_activity").onchange = function() {
+        	K1 = document.getElementById("K1_activity").value;
+			countSPzag();
+        }
+	}else{
+        document.getElementById("K1_hidden").style.display = "none";
+        K1 = 1;
+        countSPzag();	
+    }	
+}
+//Непрофесійний спорт
+/*Если поставить галку "Зайняття масовим непрофесійним спортом або звичайне зайняття активним відпочинком",
+появляется select с выбором "Групи ризику в залежності від виду спорту"
+и идет пересчет согласно выбранному пункту,
+а если убрать галку все значения возвращаются на значения по умолчанию 
+и идет соответсвующий перерасчет
+*/
+document.getElementById("K2").onclick = function() {
+	 if(this.checked){  		
+   		document.getElementById("K2_hidden").style.display = "block";
+   		document.getElementById("K2_activity").onchange = function() {
+        	K2 = document.getElementById("K2_activity").value;
+			countSPzag();
+        }
+	}else{
+        document.getElementById("K2_hidden").style.display = "none";
+        K2 = 1;
+        countSPzag();	
+    }	
+}
+  //Професійний спорт
+  /*Если поставить галку "Зайняття професійним спортом, а також масовим спортом на період проведення змагань",
+появляется select с выбором "Групи ризику в залежності від виду спорту"
+и идет пересчет согласно выбранному пункту,
+а если убрать галку все значения возвращаются на значения по умолчанию 
+и идет соответсвующий перерасчет
+*/
+document.getElementById("K3").onclick = function() {
+	 if(this.checked){  		
+   		document.getElementById("K3_hidden").style.display = "block";
+   		document.getElementById("K3_activity").onchange = function() {
+        	K3 = document.getElementById("K3_activity").value;
+			countSPzag();
+        }
+	}else{
+        document.getElementById("K3_hidden").style.display = "none";
+        K3 = 1;
+        countSPzag();	
+    }	
+}
+//ДОБРОВІЛЬНЕ СТРАХУВАННЯ ВІД НЕЩАСНИХ ВИПАДКІВ
+/*Если поставить галку "Добровільне страхування від нещасних випадків",
+появляется select с выбором "Добровільне страхування від нещасних випадків"
+и идет посчет согласно выбранному пункту и соответсвующей функции,
+а если убрать галку все значения возвращаются на значения по умолчанию 
+и идет соответсвующий перерасчет;
+*/
+document.getElementById("accident").onclick = function() {
+	 if(this.checked){  		
+   		document.getElementById("accident_hidden").style.display = "block";
+   		flag_acc = 1;
+        countSPzag();
+   		document.getElementById("SSnv").onchange = function() {
+        	SSnv = document.getElementById("SSnv").value;
+			countSPzag();
+        }
+	}else{
+        document.getElementById("accident_hidden").style.display = "none";
+        flag_acc = 0;
+        SSnv = 0;
+        countSPzag();	
+    }	
+}
+/*Страховий платіж (СПтр) з комплексного страхування під час 
+перебуванням зкордоном відповідно до обраної Опції (програми страхування), грн*/
+function countSPtr() {
+	if (currency == "USD") {
+		//rate = rate_arr["USD"];
+		 rate = usd;
+	}else{
+		//rate = rate_arr["EUR"];
+		rate = eur;
+	}
+	countSPb();
+	if (tourists == 1) {
+		SPtr = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4*K5*rate;
+	}
+	if (tourists == 2) {
+		SPtr1 = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4*K5*rate;
+		SPtr2 = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4_2*K5*rate;
+		SPtr = SPtr1 + SPtr2;
+	}
+	if (tourists == 3) {
+		SPtr1 = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4*K5*rate;
+		SPtr2 = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4_2*K5*rate;
+		SPtr3 = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4_3*K5*rate;
+		SPtr = SPtr1 + SPtr2 + SPtr3;
+	}
+	if (tourists == 4) {
+		SPtr1 = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4*K5*rate;
+		SPtr2 = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4_2*K5*rate;
+		SPtr3 = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4_3*K5*rate;
+		SPtr4 = SPb*days*Kpr*Kfr*Kter*K1*K2*K3*K4_4*K5*rate;
+		SPtr = SPtr1 + SPtr2 + SPtr3 + SPtr4;
+	}
+	
+	//document.getElementById("SPtr").value = SPtr;
+}
+/*Страховий платіж (СПнв) з добровільного страхуванням від нещасних випадків, грн.*/
+function countSPnv(){
+	countSPb_accident();
+	if (tourists == 1) {
+		SPnv = SSnv*SPb_accident*K1*K2*K3*K4*K5;
+	}
+	if (tourists == 2) {
+		SPnv1 = SSnv*SPb_accident*K1*K2*K3*K4*K5;
+		SPnv2 = SSnv*SPb_accident*K1*K2*K3*K4_2*K5;
+		SPnv = SPnv1 + SPnv2;
+	}
+	if (tourists == 3) {
+		SPnv1 = SSnv*SPb_accident*K1*K2*K3*K4*K5;
+		SPnv2 = SSnv*SPb_accident*K1*K2*K3*K4_2*K5;
+		SPnv3 = SSnv*SPb_accident*K1*K2*K3*K4_3*K5;
+		SPnv = SPnv1 + SPnv2 + SPnv3;
+	}
+	if (tourists == 4) {
+		SPnv1 = SSnv*SPb_accident*K1*K2*K3*K4*K5;
+		SPnv2 = SSnv*SPb_accident*K1*K2*K3*K4_2*K5;
+		SPnv3 = SSnv*SPb_accident*K1*K2*K3*K4_3*K5;
+		SPnv4 = SSnv*SPb_accident*K1*K2*K3*K4_4*K5;
+		SPnv = SPnv1 + SPnv2 + SPnv3 + SPnv4;
+	}	
+	//document.getElementById("SPnv").value = SPnv;
+}
+//Розрахунок загального страхового платежу на 1 (одну) особу за Міжнародни
+//договором добровільного комплексного страхування під час перебування за кордоном
+function countSP() {
+	countSPtr();
+	countSPnv();
+	SP = SPtr + SPnv;
+	//document.getElementById("SP").value = SP;	
+}
+//Розрахунок загального страхового платежу за Міжнародним договоро
+//добровільного комплексного страхування під час перебування за кордоном
+function countSPzag() {
+	countSP();
+	SPzag = SP;
+	
+	if (!SPzag) {
+		document.getElementById("sum").innerHTML = "0,00 Грн.";
+	}else{
+		SPzag = SPzag.toFixed(2);
+		document.getElementById("sum").innerHTML = SPzag + " Грн.";
+		document.getElementById("SPzag").value = SPzag;
+	}	
+}
+//Кнопка для отображения формы личных данных
+document.getElementById("continue").onclick = function() {
+	document.getElementById("personal_data_hidden").style.display = "block";
+	//document.getElementById("submit").style.display = "block";
+
+}
+	
+
+//номер телефона
+document.getElementById("tel1").oninput = function (e) {
+  var x = e.target.value.replace(/\D/g, "").match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+  e.target.value = !x[2] ? x[1] : "(" + x[1] + ") " + x[2] + (x[3] ? "-" + x[3] : "");
+};
+document.getElementById("tel2").addEventListener("input", function (e) {
+  var x = e.target.value.replace(/\D/g, "").match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+  e.target.value = !x[2] ? x[1] : "(" + x[1] + ") " + x[2] + (x[3] ? "-" + x[3] : "");
+});
+document.getElementById("tel3").addEventListener("input", function (e) {
+  var x = e.target.value.replace(/\D/g, "").match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+  e.target.value = !x[2] ? x[1] : "(" + x[1] + ") " + x[2] + (x[3] ? "-" + x[3] : "");
+});
+document.getElementById("tel4").addEventListener("input", function (e) {
+  var x = e.target.value.replace(/\D/g, "").match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+  e.target.value = !x[2] ? x[1] : "(" + x[1] + ") " + x[2] + (x[3] ? "-" + x[3] : "");
+});
+//Имя
+document.getElementById("name1").onkeyup = function() {
+	if (!regName.test(document.getElementById("name1").value)) {
+   	document.getElementById("name1_error").innerHTML = "Дозволені тільки латинські літери";
+   }else{
+   	document.getElementById("name1_error").innerHTML = "";
+   }
+}
+document.getElementById("name2").onkeyup = function() {
+	if (!regName.test(document.getElementById("name2").value)) {
+   	document.getElementById("name2_error").innerHTML = "Дозволені тільки латинські літери";
+   }else{
+   	document.getElementById("name2_error").innerHTML = "";
+   }
+}
+document.getElementById("name3").onkeyup = function() {
+	if (!regName.test(document.getElementById("name3").value)) {
+   	document.getElementById("name3_error").innerHTML = "Дозволені тільки латинські літери";
+   }else{
+   	document.getElementById("name3_error").innerHTML = "";
+   }
+}
+document.getElementById("name4").onkeyup = function() {
+	if (!regName.test(document.getElementById("name4").value)) {
+   	document.getElementById("name4_error").innerHTML = "Дозволені тільки латинські літери";
+   }else{
+   	document.getElementById("name4_error").innerHTML = "";
+   }
+}
+//Фамилия
+document.getElementById("surname1").onkeyup = function() {
+	if (!regName.test(document.getElementById("surname1").value)) {
+   	document.getElementById("surname1_error").innerHTML = "Дозволені тільки латинські літери";
+   }else{
+   	document.getElementById("surname1_error").innerHTML = "";
+   }
+}
+document.getElementById("surname2").onkeyup = function() {
+	if (!regName.test(document.getElementById("surname2").value)) {
+   	document.getElementById("surname2_error").innerHTML = "Дозволені тільки латинські літери";
+   }else{
+   	document.getElementById("surname2_error").innerHTML = "";
+   }
+}
+document.getElementById("surname3").onkeyup = function() {
+	if (!regName.test(document.getElementById("surname3").value)) {
+   	document.getElementById("surname3_error").innerHTML = "Дозволені тільки латинські літери";
+   }else{
+   	document.getElementById("surname3_error").innerHTML = "";
+   }
+}
+document.getElementById("surname4").onkeyup = function() {
+	if (!regName.test(document.getElementById("surname4").value)) {
+   	document.getElementById("surname4_error").innerHTML = "Дозволені тільки латинські літери";
+   }else{
+   	document.getElementById("surname4_error").innerHTML = "";
+   }
+}
+//Серия паспорта
+document.getElementById("pass_series1").onkeyup = function() {
+	if (!regpass_series.test(document.getElementById("pass_series1").value)) {
+   	document.getElementById("pass_series1_error").innerHTML = "Дві великы латинські літери";
+   }else{
+   	document.getElementById("pass_series1_error").innerHTML = "";
+   }
+}
+document.getElementById("pass_series2").onkeyup = function() {
+	if (!regpass_series.test(document.getElementById("pass_series2").value)) {
+   	document.getElementById("pass_series2_error").innerHTML = "Дві великы латинські літери";
+   }else{
+   	document.getElementById("pass_series2_error").innerHTML = "";
+   }
+}
+document.getElementById("pass_series3").onkeyup = function() {
+	if (!regpass_series.test(document.getElementById("pass_series3").value)) {
+   	document.getElementById("pass_series3_error").innerHTML = "Дві великы латинські літери";
+   }else{
+   	document.getElementById("pass_series3_error").innerHTML = "";
+   }
+}
+document.getElementById("pass_series4").onkeyup = function() {
+	if (!regpass_series.test(document.getElementById("pass_series4").value)) {
+   	document.getElementById("pass_series4_error").innerHTML = "Дві великы латинські літери";
+   }else{
+   	document.getElementById("pass_series4_error").innerHTML = "";
+   }
+}
+//Номер паспорта
+document.getElementById("pass_num1").onkeyup = function() {
+	if (!regpass_num.test(document.getElementById("pass_num1").value)) {
+   	document.getElementById("pass_num1_error").innerHTML = "Шість цифр";
+   }else{
+   	document.getElementById("pass_num1_error").innerHTML = "";
+   }
+}
+document.getElementById("pass_num2").onkeyup = function() {
+	if (!regpass_num.test(document.getElementById("pass_num2").value)) {
+   	document.getElementById("pass_num2_error").innerHTML = "Шість цифр";
+   }else{
+   	document.getElementById("pass_num2_error").innerHTML = "";
+   }
+}
+document.getElementById("pass_num3").onkeyup = function() {
+	if (!regpass_num.test(document.getElementById("pass_num3").value)) {
+   	document.getElementById("pass_num3_error").innerHTML = "Шість цифр";
+   }else{
+   	document.getElementById("pass_num3_error").innerHTML = "";
+   }
+}
+document.getElementById("pass_num4").onkeyup = function() {
+	if (!regpass_num.test(document.getElementById("pass_num4").value)) {
+   	document.getElementById("pass_num4_error").innerHTML = "Шість цифр";
+   }else{
+   	document.getElementById("pass_num4_error").innerHTML = "";
+   }
+
+}
+
+	};
+
+
+
+</script>
+
+
+	  ';
+     break;
+  }
+  return $block;
+}
+?>

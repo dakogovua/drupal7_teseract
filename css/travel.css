@@ -1,0 +1,623 @@
+.column{
+	display: inline-block;
+}
+.padding{
+	padding-top: 24px;
+}
+
+button.btn.btn-default.btn-sm {
+	white-space:normal;
+	width: 160px;
+	display:block;
+	height:auto;
+	background: #edeff4;
+	color:black;
+	font-size: 10px;
+}
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form .btn:hover {
+	background: #0C2D6B;
+	color: #fff;
+}
+
+.koss-background {
+	background-color : #0C2D6B!important;
+	color: #fff!important;
+}
+
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form .btn-info{
+	background-color: transparent;
+	color: #0C2D6B;
+	padding: 16px;
+	border-radius: 0px;
+	float: left;
+	line-height: 1;
+}
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form .btn-info.active {
+	background-color : #0C2D6B;
+	color: #fff;
+}
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form div > .btn:active,
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form div > .btn:focus,
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form div > .btn.active {
+	-webkit-box-shadow: inset 0 0px 0px transparent;
+	box-shadow: inset 0 0px 0px transparent;
+	outline: 0;
+}
+
+.btn:not(.dexp-shortcodes-button) {
+	min-height:30px;
+	white-space:initial;
+}
+
+.site-logo img {
+	height: auto;
+	max-width: 50%;
+	opacity: 0.68;
+}
+
+body.header-overlay #section-header.fixed-transition .section-inner {
+	background-color: rgba(20,20,20,0.25);
+}
+
+body.header-overlay #section-header.fixed-transition .section-inner .site-logo img{
+	background: aliceblue;
+	border-radius: 50%;
+}
+
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator .strahinfo #Kter .btn-group button {
+	
+}
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator .strahinfo {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+}
+
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator .strahinfo #accident_hidden {
+	margin: 10px 0;
+}
+
+div#kter_div button {
+	margin: 2px;
+}
+
+button#K1, #K2, #K3 {
+	margin-bottom: 1px;
+}
+
+ #block-lang-dropdown-language label {
+ 	margin-right: 20px;
+ }
+ div#block-lang-dropdown-language {
+ 	margin-top: 5px;
+ }
+
+ body.ltr #section-header .region-navigation {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: end;
+	-ms-flex-pack: end;
+	justify-content: flex-end;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+ }
+ #contact-site-form .form-text {
+ 	color: #000;
+ }
+
+.contact-form .form-type-checkbox .option {
+	color: #000;
+}
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form .btn,
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form .btn-info {
+	border: 1px solid #0C2D6B;
+}
+
+
+.kossnowrap {
+white-space:nowrap;
+}
+
+.orig_file {
+  overflow: hidden!important;
+	position: relative!important;
+	background: transparent!important;
+	/*border-radius: .5em!important;*/
+	border: 1px solid #0C2D6B;
+	padding: .5em!important;
+	cursor: pointer!important;
+	transition: all .5s!important;
+}
+.orig_file:hover {
+	color: #fff;
+	background-color: #0C2D6B!important;
+}
+.orig_file #file_strah, .orig_file #file_strah1, .orig_file #file_strah2, .orig_file #file_strah3, .orig_file #file_strah4 {
+	cursor: inherit!important;
+	display: block!important;
+	font-size: 999px!important;
+	filter: alpha(opacity=0)!important;
+	min-height: 100%!important;
+	min-width: 100%!important;
+	opacity: 0!important;
+	position: absolute!important;
+	right: 0!important;
+	text-align: right!important;
+	top: 0!important;
+}
+
+.col-sm-3.cost-ua {
+	display: -webkit-flex;
+	display: -moz-flex;
+	display: -ms-flex;
+	display: -o-flex;
+	display: flex;
+}
+
+.cost-ua span {
+	margin-top: 4px;
+	margin-left: 10px;
+}
+
+.date-picker-wrapper.no-shortcuts {
+	margin-top: 10px;
+	margin-left: -20px;
+}
+
+#two-inputs {
+	display: none;
+}
+
+.white-box {
+	background-color: rgba(255,255,255,1);
+}
+
+.modal-open .modal {
+	margin: 0 auto;
+}
+
+#ex1.modal {
+	overflow: overlay;
+}
+#ex1 .modal-open .modal p {
+	text-align: center;
+}
+
+#ex1 .position-order h4, .position-order p {
+	display: inline-block;
+	margin: 0;
+}
+
+#ex1 .position-order .mb h4 {
+	font-size: 18px;
+}
+
+#ex1 .position-order .mb p {
+	margin-left: 20px;
+}
+
+#ex1 .position-order .maininfostrah h1 {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#ex1 .position-order .maininfostrah .email-address,
+#ex1 .position-order .maininfostrah .cont-telephone,
+#ex1 .position-order .maininfostrah .download-polis {
+	margin-bottom: 10px;
+}
+
+#ex1 .position-order .maininfostrah div input{
+	width: 300px;
+}
+
+#ex1 .position-order .maininfostrah .email-address {
+
+}
+
+#ex1 .position-order .maininfostrah .cont-telephone {
+
+}
+
+#ex1 .position-order .maininfostrah .download-polis {
+
+}
+#ex1 .position-order .maininfostrah,
+#ex1 .position-order .infostrahall {
+	border-bottom: 1px solid #000;
+	padding: 5px 0;
+}
+
+#ex1 .position-order .maininfostrahall .infostrahall h2{
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+}
+
+#ex1 .position-order .maininfostrahall .infostrahall p {
+	margin-left: 15px;
+}
+
+#ex1 .position-order .maininfostrahall .infostrahall .er-info {
+	display: inline-block;
+	height: 30px;
+}
+
+
+
+#ex1 .position-order .maininfostrahall .infostrahall .er-info h4 {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#ex1 .position-order .maininfostrahall .infostrahall .er-info p {
+	float: right;
+}
+
+#ex1 .position-order .button-group {
+	width: 100%;
+	text-align: center;
+}
+#ex1 .position-order .button-group .closebutton {
+	margin: 10px auto;
+	padding: 5px 15px;
+}
+#ex1 .position-order .button-group .closebutton a {
+	color: #fff;
+}
+label {
+	font-size: 13px;
+}
+
+
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form .file-input .btn {
+	background: transparent;
+	color: #0C2D6B;
+	border: 1px solid #0C2D6B;
+	transition: all .3s;
+	padding: 12px 0;
+	min-height: 0; 
+}
+.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form .file-input .btn:hover{
+	background: #0C2D6B;
+	color: #fff;
+	border: 1px solid transparent;
+}
+
+.kv-zoom-actions .btn {
+	background: transparent;
+	color: #0C2D6B;
+	border: 1px solid #0C2D6B;
+	transition: all .3s;
+	padding: 6px 0;
+	min-height: 0;
+	height: unset;
+}
+
+.kv-zoom-actions .btn:hover {
+	background: #0C2D6B;
+	color: #fff;
+	border: 1px solid transparent;
+}
+.strahinfo {
+	padding: 0;
+}
+
+@media screen and (max-width: 991px) {
+	body.ltr #section-header .block {
+		margin-right: 20px;
+	}
+}
+@media screen and (max-width: 767px) {
+	.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form .btn-info {
+		float: none;
+		margin-bottom: 5px;
+	}
+	body.ltr #section-header .block {
+		margin-right: 20px;
+	}
+	.dexp-body-inner .dexp-section .dexp-container .region .content #block-orphus-orphus-block .content #insuranceCalculator form .btn-info {
+		height: auto;
+	}
+
+	.block.overlay-bg .content {
+		padding: 0;
+	}
+	.butvisa {
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+		padding: 0;
+	}
+
+	.kossnowrap {
+		white-space: unset;
+	}
+
+	#Kter .btn-group button {
+		display: block;
+		width: 100%;
+	}
+	.butvisa .my-btn-group {
+		text-align: center;
+	}
+
+	.strahinfo .strah-collapse button{
+		width: 100%;
+	}
+
+	.strahinfo div .btn-group button {
+		display: block!important;
+    width: 100%!important;
+    margin: 5px 0;
+	}
+	.strahinfo div .btn-group {
+		margin: 10px 0;
+	}
+	.summ {
+		margin-top: 10px;
+	}
+
+	.cost-ua {
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+	}
+	.cost-ua select {
+		font-size: 10px;
+		margin: 0;
+	}
+	.cost-ua span{
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		margin-left: 14px;
+	}
+}
+.dd-option {
+	cursor: pointer;
+}
+
+
+/* прелоадер*/
+
+.preloader-but {
+	z-index: 999999;
+	display: inline-block;
+	opacity: 0;
+	background: #fff;
+	margin-top: 2px;
+	margin-left: 10px;
+	-webkit-transition: opacity 1s;
+	-o-transition: opacity 1s;
+	transition: opacity 1s;
+}
+
+.kossmenuclass .menu {
+	text-align: right;
+}
+
+.kossmenuclass .dexp-dropdown >ul.menu>li>a, .kossmenuclass .dexp-dropdown >ul.menu>li>a, .kossmenuclass .dexp-dropdown >ul.menu>li>span.nolink {
+	padding: 0 2px;
+	margin: 0 4px;
+	font-size: 13px;
+	text-transform: none;
+	letter-spacing: 0px;
+}
+
+.pl0{
+	padding-left: 0;
+}
+ 
+.page-loader-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid;
+    border-top-color: rgba(34, 34, 34, 1);
+    border-bottom-color: rgba(0, 0, 0, 0.15);
+    border-left-color: rgba(34, 34, 34, 1);
+    border-right-color: rgba(0, 0, 0, 0.15);
+    -webkit-animation: page-loader-circle 0.8s linear infinite;
+    animation: page-loader-circle 0.8s linear infinite;
+}
+ 
+@keyframes page-loader-circle {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+ 
+@-webkit-keyframes page-loader-circle {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+
+/*MODAL REX*/
+
+
+/* The Modal (background) */
+.kmodal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.kmodal-content {
+    position: fixed;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 50%;
+    right: 0;
+    left: 0;
+    bottom: 200px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+#contact-site-form textarea {
+	color: #000;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.kclose {
+    color: white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.kclose:hover,
+.kclose:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.kmodal-header {
+    padding: 2px 16px;
+    /*background-color: #5cb85c;*/
+    color: white;
+}
+
+.kmodal-body {padding: 2px 16px;}
+
+.kmodal-footer {
+    padding: 2px 16px;
+    /*background-color: #5cb85c;*/
+    color: white;
+}
+.kmodal-content .btn {
+	border: none!important;
+}
+
+.kmodal-content .kclose {
+	color: #000;
+}
+
+.kmodal-content .kmodal-header h2, .kmodal-content .kmodal-footer h3 {
+	text-align: center;
+	color: #04173d;
+	margin-bottom: 0;
+}
+
+ .kmodal-content .kmodal-footer h3 {
+ 	font-size: 12px;
+ }
+
+.kmodal-content .kmodal-body {
+	text-align: center;
+	margin: 10px auto;
+}
+
+.kmodal-content .kmodal-body .btn-primary {
+	background-color: green;
+}
+
+.kmodal-content .kmodal-body .btn-secondary {
+	background-color: red;
+}
+
+.kmodal-body p {
+    font-size: 1.2em;
+}
+
+.kmodal-content .kmodal-body .peshki {
+	margin: 30px 0;
+}
+	
+.koss-xs-div {
+	float: left;
+	 
+	}
+	
+.koss-div-center {
+	margin: auto;
+    padding: 10px;
+	width:100%;
+}
+
+@media screen and (max-width: 767px) {
+	.kmodal-content {
+	bottom: 80px;
+	width: 80%;
+	}
+	
+.justify-content-center	button {
+		
+	    margin-top: 5px;
+	}
+	
+}
+
+input:required {
+  border-color: #d37d13;
+  
+}
+
+
+input:required:valid {
+  border-color: green;
+}
+
+input:required:invalid {
+  border-color: #C00000;
+}
+
+.errorMessages  {
+	   width: max-content; 
+	   padding: 0;
+}
+
+    
